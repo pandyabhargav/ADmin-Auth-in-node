@@ -2,6 +2,7 @@ const express = require('express');
 const router = require('./Router/router');
 const path = require('path');
 const mongoose = require('./config/mongose')
+const cookieParser = require('cookie-parser');
 const app = express();
 const port = 3000;
 
@@ -9,15 +10,16 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'views')));
 
+app.use(cookieParser());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-
-app.use((req, res, next) => {
-    res.cookie('name', 'Ronaldo');
-    next(); 
-});
+// app.use((req, res, next) => {
+//     res.cookie('name', 'Ronaldo');
+//     next(); 
+// });
 
 
 app.use('/', router);

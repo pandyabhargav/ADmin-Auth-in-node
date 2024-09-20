@@ -10,7 +10,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts/dist/apexcharts.css">
     <link rel="stylesheet" href="css/index.css">
 <body>
-  
+    
+    <div class="load" id="loaderContainer">
+        <div id="loader" class="loader">
+            <div>
+                <img src="images/loader.gif" alt="loader">
+            </div>
+        </div>
+    </div>
+
         <div class="sidebar">
             <div class="bg-img">
                 <div class="logo d-flex p-3 flex-wrap justify-content-evenly align-items-center">
@@ -68,7 +76,7 @@
                                 <div class="icon-bg m-1 rounded">
                                     <i class="fa-solid fa-moon"></i>
                                 </div>
-                                <div class="profile d-flex flex-wrap justify-content-end align-items-center ms-4">
+                                <div class="profile d-flex flex-wrap justify-content-end align-items-center ms-4" id="profileDropdown">
                                     <div class="profil-img">
                                         <img src="images/20230620_095708.png" class="rounded-circle" alt="profile-img" />
                                     </div>
@@ -77,6 +85,11 @@
                                             <h5>Bhargav Pandya</h5>
                                             <p>Admin <i class="fa-solid fa-angle-down"></i></p>
                                         </div>
+                                    </div>
+                                    <div class="dropdown-menu" style="display:none;">
+                                        <a class="dropdown-item disabled" href="/profile">Profile</a>
+                                        <a class="dropdown-item disabled" href="/settings">Settings</a>
+                                        <a class="dropdown-item" href="/logout">Logout</a>
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +105,7 @@
                             <div class="bg-welcome-img rounded text-center pb-3">
                                 <img src="images/offer.gif" alt="img">
                                 <p class="pt-50 m-0">Exclusive weekend discounts</p>
-                                <h5>Welcome To ZwiGato</h5>
+                                <h5>Welcome, <%= userName ? userName : 'Guest' %>!</h5>
                                 <button class="bt1 btn-primary px-4 mt-1 mb-3 py-2 rounded">
                                     Check Menu
                                 </button>
@@ -1180,6 +1193,32 @@ var options4 = {
 
     var chart4 = new ApexCharts(document.querySelector("#chart4"), options4);
     chart4.render();
+
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const profileDropdown = document.getElementById('profileDropdown');
+    const dropdownMenu = profileDropdown.querySelector('.dropdown-menu');
+
+    // Toggle dropdown visibility on click
+    profileDropdown.addEventListener('click', (event) => {
+        // Prevent the click from propagating to the window click listener
+        event.stopPropagation();
+        
+        // Toggle dropdown menu visibility
+        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Close dropdown if clicked outside
+    window.addEventListener('click', () => {
+        dropdownMenu.style.display = 'none';
+    });
+
+        // Simulate loading
+        setTimeout(() => {
+            document.getElementById('loaderContainer').style.display = 'none';
+            // document.getElementById('content').style.display = 'block';
+        }, 2000); // Change the delay as needed
 
 });
 
